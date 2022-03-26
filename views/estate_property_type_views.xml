@@ -20,7 +20,6 @@
             <form string="Property Type">
                 <sheet>
                     <group>
-                        <!-- Add your fields here -->
                         <field name="name"/>
                     </group>
                 </sheet>

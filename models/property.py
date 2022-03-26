@@ -27,13 +27,17 @@ class Property(models.Model):
                                  default=lambda self: self.env.user,
                                  copy=False)
 
-    buyer_id = fields.Many2one('res.partner', string='Buyer')
+    buyer_id = fields.Many2one('res.partner', 
+                               string='Buyer')  
+    
+    tag_ids = fields.Many2many('property.tag')
     
     # LOCAL FIELDS
     name = fields.Char(string='Title', default='Unknown', required=True)
     last_seen = fields.Datetime('Last Seen', 
                                 default=lambda self: fields.Datetime.now())
-    description = fields.Text(string='Description')
+    description = fields.Text(string='Description',
+                              default="No Description")
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(string='Available From', 
                                     copy=False, 

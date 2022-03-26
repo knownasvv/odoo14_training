@@ -8,6 +8,7 @@
         <field name="model">property</field>
         <field name="arch" type="xml">
             <tree>
+                <!-- LOCAL FIELDS -->
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
@@ -15,7 +16,12 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="date_availability"/>
+
+                <!-- EXTERNAL FIELDS -->
                 <field name="property_type_id"/>
+                <field name="sales_person_id"/>
+                <field name="buyer_id"/>
+                <field name="tag_ids"/>
             </tree>
         </field>
     </record>
@@ -25,12 +31,14 @@
         <field name="name">property.view.form</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <form string="">
+            <form string="Property">
                 <sheet>
-                    <group>
+                    <group style="width:100%">
                         <h1>
                             <field name="name" style="width:100%"/>
                         </h1>
+                        <field name="tag_ids"
+                            widget="many2many_tags"/>
                     </group>
                     <group>
                         <group>

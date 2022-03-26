@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- property.tag action window -->
+    <record id="property_tag_action" model="ir.actions.act_window">
+        <field name="name">property.tag.action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">property.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem 
+        id="property_tag_menu_act" 
+        name="Property Tags" 
+        parent="settings_menu_categ" 
+        action="property_tag_action" 
+        sequence="20"/>
+</odoo>
