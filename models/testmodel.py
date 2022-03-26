@@ -18,15 +18,18 @@ class TestModel(models.Model):
                                         ('cancelled', 'Cancelled')])
     
 
-    name = fields.Char(string='Name', default='Unknown', required=True)
-    last_seen = fields.Datetime('Last Seen', default=lambda self: fields.Datetime.now())
+    name = fields.Char(string='Title', default='Unknown', required=True)
+    last_seen = fields.Datetime('Last Seen', 
+                                default=lambda self: fields.Datetime.now())
     description = fields.Text(string='Description')
-    postcode = fields.Char(string='Post Code')
-    date_availability = fields.Date(string='Date Availability', copy=False, default=lambda self: fields.Datetime.today())
+    postcode = fields.Char(string='PostCode')
+    date_availability = fields.Date(string='Available From', 
+                                    copy=False, 
+                                    default=lambda self: fields.Datetime.today())
     expected_price = fields.Float(string='Expected Price', required=True, copy=False)
     selling_price = fields.Float(string='Selling Price', readonly=True)
     bedrooms = fields.Integer(string='Bedrooms', default='2')
-    living_area = fields.Integer(string='Living Area')
+    living_area = fields.Integer(string='Living Area (sqm)')
     facades = fields.Integer(string='Facades')
     garage = fields.Boolean(string='Garage')
     garden = fields.Boolean(string='Garden')
