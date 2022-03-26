@@ -32,6 +32,10 @@ class Property(models.Model):
     
     tag_ids = fields.Many2many('property.tag')
     
+    offer_ids = fields.One2many('property.offer', 
+                                'property_id',
+                                string='Offers')
+    
     # LOCAL FIELDS
     name = fields.Char(string='Title', default='Unknown', required=True)
     last_seen = fields.Datetime('Last Seen', 

@@ -22,6 +22,7 @@
                 <field name="sales_person_id"/>
                 <field name="buyer_id"/>
                 <field name="tag_ids"/>
+                <field name="offer_ids"/>
             </tree>
         </field>
     </record>
@@ -63,6 +64,9 @@
                                 <field name="garden_area"/>
                                 <field name="garden_orientation"/>
                             </group>
+                        </page>
+                        <page string="Offers">
+                            <field name="offer_ids"/>
                         </page>
                         <page string="Other Info">
                             <group>
