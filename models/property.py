@@ -2,10 +2,11 @@ import re
 from odoo import api, fields, models
 
 
-class TestModel(models.Model):
-    _name = 'test.model'
-    _description = 'Test Model'
+class Property(models.Model):
+    _name = 'property'
+    _description = 'Properties'
 
+    # RESERVED FIELDS
     active = fields.Boolean(string='Active', default=True)
     state = fields.Selection(string='State', 
                              required=True,
@@ -17,12 +18,23 @@ class TestModel(models.Model):
                                         ('sold', 'Sold'),
                                         ('cancelled', 'Cancelled')])
     
+    # EXTERNAL FIELDS
+    property_type_id = fields.Many2one('property.type', 
+                                       string='Property Type')
 
+    sales_person_id = fields.Many2one('res.users', 
+                                 string='Salesman',
+                                 default=lambda self: self.env.user,
+                                 copy=False)
+
+    buyer_id = fields.Many2one('res.partner', string='Buyer')
+    
+    # LOCAL FIELDS
     name = fields.Char(string='Title', default='Unknown', required=True)
     last_seen = fields.Datetime('Last Seen', 
                                 default=lambda self: fields.Datetime.now())
     description = fields.Text(string='Description')
-    postcode = fields.Char(string='PostCode')
+    postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(string='Available From', 
                                     copy=False, 
                                     default=lambda self: fields.Datetime.today())

@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from . import testmodel
+from . import property
+from . import property_type

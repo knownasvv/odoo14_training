@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- property.type tree view -->
+    <record id="property_type_view_tree" model="ir.ui.view">
+        <field name="name">property.type.view.tree</field>
+        <field name="model">property.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- property.type form view -->
+    <record id="property_type_view_form" model="ir.ui.view">
+        <field name="name">property.type.view.form</field>
+        <field name="model">property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- property.type action window -->
+    <record id="property_type_action" model="ir.actions.act_window">
+        <field name="name">property.type.action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">property.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem 
+        id="property_type_menu_act" 
+        name="Property Type" 
+        parent="settings_menu_categ" 
+        action="property_type_action" 
+        sequence="10"/>
+</odoo>
