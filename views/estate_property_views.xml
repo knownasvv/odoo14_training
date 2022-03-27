@@ -18,6 +18,9 @@
                 <field name="date_availability"/>
                 <field name="total_area"/>
                 <!-- <field name="best_price"/> -->
+                <field name="state" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
 
                 <!-- EXTERNAL FIELDS -->
                 <!-- <field name="property_type_id"/>
@@ -35,6 +38,14 @@
         <field name="model">property</field>
         <field name="arch" type="xml">
             <form string="Property">
+                <header>
+                    <button name="action_property_sold"
+                        type="object"
+                        string="SOLD"/>>
+                    <button name="action_property_cancel"
+                        type="object"
+                        string="CANCEL"/>
+                </header>
                 <sheet>
                     <group style="width:100%">
                         <h1>
@@ -45,6 +56,7 @@
                     </group>
                     <group>
                         <group>
+                            <field name="state"/>
                             <field name="property_type_id"/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
