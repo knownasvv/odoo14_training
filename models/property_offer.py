@@ -1,12 +1,32 @@
 from odoo import api, fields, models
 from dateutil.relativedelta import relativedelta
+from odoo.tools import float_is_zero, float_compare
+from odoo.exceptions import ValidationError
 
 
 class PropertyOffer(models.Model):
     _name = 'property.offer'
     _description = 'Property Offers'
     
-
+    
+    # CONSTRAINTS
+    _sql_constraints = [
+        ('positive_price', 
+         'CHECK(price > 0)',
+         'The offer price must be strictly positive.'),
+    ]
+    
+    @api.constrains('status')
+    def _check_selling_price(self):
+        for record in self:
+            if record.status != False or record.status == 'accepted':
+                if float_is_zero(record.property_id.expected_price, precision_digits=2) == False:
+                    if float_compare(record.price, record.property_id.expected_price * 0.9, precision_digits=2) == -1:
+                        if record.status == 'accepted':
+                            record.status = 'refused'
+                        raise ValidationError("The selling price must be at least 90% of the expected price.")
+        return True
+    
     # LOCAL FIELDS
     price = fields.Float(string='Price')
     
@@ -48,10 +68,13 @@ class PropertyOffer(models.Model):
     # ACTIONS
     def action_offer_accept(self):
         for record in self:
-            record.status = 'accepted'
+            if record._check_selling_price():
+                record.status = 'accepted' 
             record.property_id.buyer_id = record.partner_id
             record.property_id.selling_price = record.price
     
     def action_offer_refuse(self):
         for record in self:
+            if record.status == 'accepted':
+                record.property_id.selling_price = 0
             record.status = 'refused'

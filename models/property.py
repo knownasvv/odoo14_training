@@ -5,7 +5,18 @@ from odoo.exceptions import AccessError
 class Property(models.Model):
     _name = 'property'
     _description = 'Properties'
-
+    
+    # CONSTRAINTS
+    _sql_constraints = [
+        ('positive_expected_price', 
+         'CHECK(expected_price > 0)',
+         'The expected price must be strictly positive.'),
+        ('positive_selling_price',
+         'CHECK(selling_price >= 0)',
+         'The selling price must be positive.'),
+    ]
+    
+    
     # RESERVED FIELDS
     active = fields.Boolean(string='Active', default=True)
     state = fields.Selection(string='State', 
@@ -17,7 +28,22 @@ class Property(models.Model):
                                         ('offer_accepted', 'Offer Accepted'),
                                         ('sold', 'Sold'),
                                         ('cancelled', 'Cancelled')])
-
+    
+    # ACTIONS
+    def action_property_sold(self):
+        for record in self:
+            if record.state != "cancelled":
+                record.state = "sold"
+            else:
+                raise AccessError("Cancelled property cannot be sold.")
+    
+    def action_property_cancel(self):
+        for record in self:
+            if record.state != "sold":
+                record.sstatetatus = "cancelled"
+            else:
+                raise AccessError("Sold property cannot be cancelled.")
+    
     # EXTERNAL FIELDS
     property_type_id = fields.Many2one('property.type', 
                                        string='Property Type')
@@ -36,30 +62,8 @@ class Property(models.Model):
                                 'property_id',
                                 string='Offers')
     
-    # ACTIONS
-    def action_property_sold(self):
-        for record in self:
-            if record.state != "cancelled":
-                record.state = "sold"
-            else:
-                raise AccessError("Cancelled property cannot be sold.")
     
-    def action_property_cancel(self):
-        for record in self:
-            if record.state != "sold":
-                record.sstatetatus = "cancelled"
-            else:
-                raise AccessError("Sold property cannot be cancelled.")
     
-    def action_offer_accept(self):
-        for record in self:
-            record.offer_ids.status = 'accepted'
-            record.buyer_id = record.offer_ids.partner_id
-            record.selling_price = record.offer_ids.price
-    
-    def action_offer_refuse(self):
-        for record in self:
-            record.offer_ids.status = 'refused'
     
     # LOCAL FIELDS
     name = fields.Char(string='Title', default='Unknown', required=True)
