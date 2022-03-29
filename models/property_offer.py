@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class PropertyOffer(models.Model):
     _name = 'property.offer'
     _description = 'Property Offers'
-    
+    _order = 'price desc'
     
     # CONSTRAINTS
     _sql_constraints = [
@@ -19,7 +19,7 @@ class PropertyOffer(models.Model):
     @api.constrains('status')
     def _check_selling_price(self):
         for record in self:
-            if record.status != False or record.status == 'accepted':
+            if record.status != False and record.status == 'accepted':
                 if float_is_zero(record.property_id.expected_price, precision_digits=2) == False:
                     if float_compare(record.price, record.property_id.expected_price * 0.9, precision_digits=2) == -1:
                         if record.status == 'accepted':
@@ -48,6 +48,10 @@ class PropertyOffer(models.Model):
         comodel_name='property',
         required=True
     )
+    
+    property_type_id = fields.Many2one(related='property_id.property_type_id', 
+                                       string='Property Type',
+                                       store=True)
     
     validity = fields.Integer(string='Validity (days)', default=7)
     date_deadline = fields.Date(string='Deadline', 

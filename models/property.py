@@ -5,6 +5,7 @@ from odoo.exceptions import AccessError
 class Property(models.Model):
     _name = 'property'
     _description = 'Properties'
+    _order = 'id desc'
     
     # CONSTRAINTS
     _sql_constraints = [
@@ -24,7 +25,7 @@ class Property(models.Model):
                              copy=False,
                              default='new',
                              selection=[('new', 'New'),
-                                        ('offer_receieved', 'Offer Received'),
+                                        ('offer_received', 'Offer Received'),
                                         ('offer_accepted', 'Offer Accepted'),
                                         ('sold', 'Sold'),
                                         ('cancelled', 'Cancelled')])
@@ -61,9 +62,6 @@ class Property(models.Model):
     offer_ids = fields.One2many('property.offer', 
                                 'property_id',
                                 string='Offers')
-    
-    
-    
     
     # LOCAL FIELDS
     name = fields.Char(string='Title', default='Unknown', required=True)
