@@ -6,6 +6,7 @@ class Property(models.Model):
     _name = 'property'
     _description = 'Properties'
     _order = 'id desc'
+    # _inherit = ['res.users','res.partner']
     
     # CONSTRAINTS
     _sql_constraints = [
@@ -41,7 +42,7 @@ class Property(models.Model):
     def action_property_cancel(self):
         for record in self:
             if record.state != "sold":
-                record.sstatetatus = "cancelled"
+                record.state = "cancelled"
             else:
                 raise AccessError("Sold property cannot be cancelled.")
     
@@ -112,12 +113,35 @@ class Property(models.Model):
     def _compute_best_price(self):
             self.best_price = max(self.offer_ids.mapped('price'), default=0)
     
+    # @api.model
+    # def create(self, values):
+    #     data = self.env['property'].search([('state','not in',['new','cancelled'])])
+    #     if not data:
+    #         raise AccessError('Cannot create record with state: Offer Received')
+    #     return super().create(values)
     
-    
-    
-    
-    
-    
-    
-    
-    
+    # @api.model
+    # def create(self, values):
+        
+        
+    #     # here you can do accordingly
+    #     return super(Property, self).create(values)
+      
+    # def unlink(self):
+    #     data = self.env['property'].search([('state','=','offer_received')])
+
+    #     if not ensure_one(data):
+    #         for record in data:
+    #             if record.state not in ('new', 'cancelled'):
+    #                 raise AccessError("Only new and cancelled property can be deleted.")
+    #     else:
+    #         if data.state not in ('new', 'cancelled'):
+    #             raise AccessError("Only new and cancelled property can be deleted.")
+
+    #     return super(Property, self).unlink()
+                
+    # def unlink(self):
+    #     for record in self:
+        
+    #     # "your code"
+    #     return super(Property, self).unlink()

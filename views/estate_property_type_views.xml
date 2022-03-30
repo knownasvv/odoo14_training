@@ -8,10 +8,10 @@
             <tree>
                 <!-- Add your fields here -->
                 <field name="name"/>
-                <!-- <field name="property_ids"/>
-                <field name="sequence" widget='handle'/>
-                <field name="offer_id"/>
-                <field name="offer_count"/> -->
+                <field name="property_ids"/>
+                <!-- <field name="sequence" widget='handle'/> -->
+                <!-- <field name="offer_id"/> -->
+                <!-- <field name="offer_count"/> -->
             </tree>
         </field>
     </record>
@@ -54,7 +54,7 @@
 
     <!-- property.type action window -->
     <record id="property_type_action" model="ir.actions.act_window">
-        <field name="name">property.type.action</field>
+        <field name="name">Property Types</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">property.type</field>
         <field name="view_mode">tree,form</field>

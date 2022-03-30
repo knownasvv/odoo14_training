@@ -46,7 +46,7 @@
 
     <!-- property.offer action window -->
     <record id="property_offer_action" model="ir.actions.act_window">
-        <field name="name">property.offer.action</field>
+        <field name="name">Property Offers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">property.offer</field>
         <field name="view_mode">tree,form</field>
